@@ -65,6 +65,7 @@ void linked_insert(Linked* linked, void* element, int index);
 void linked_remove(Linked* linked, int index);
 void* linked_pop(Linked* linked);
 void* linked_get(Linked* linked, int index);
+void* linked_get_and_remove(Linked* linked, int index);
 void linked_replace(Linked* linked, void* element, int index);
 void linked_free(Linked* linked);
 // stack ----------------------------------------------------------------------
