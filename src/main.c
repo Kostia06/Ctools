@@ -2,6 +2,7 @@
 #include <string.h>
 #include "ctools/include.h"
 
+
 int main(){
     MemoryGroup* memory = mem_group_init();
     Vector* vector = vector_init(memory);
