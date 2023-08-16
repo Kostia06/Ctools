@@ -4,10 +4,11 @@
 
 int main(){
     MemoryGroup* memory = mem_group_init();
-    Vector* vector = vector_init(memory);
-    for(int i=0;i<10;i++){
-        vector_add(vector,&i);
-    }
+    NodeTree* tree = node_init(memory,100);
+    Node* main = tree->head; 
+    Node* main1 = node_add(tree, main, 0, "main");
+    Node* hello = node_add(tree, main1, 1, "hello");
+    node_remove(tree,hello);
     printf("size: %zu\n",memory->size);
     return 0;
 }

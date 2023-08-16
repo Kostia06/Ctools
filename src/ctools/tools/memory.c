@@ -6,7 +6,7 @@ MemoryGroup* mem_group_init(){
     return memory;
 }
 // initializes a new memory element
-void* mem_init(MemoryGroup* memory, int size){
+void* mem_init(MemoryGroup* memory, size_t size){
     void* element = malloc(size);
     Memory* mem = malloc(sizeof(Memory));
     mem->element = element;
@@ -25,7 +25,7 @@ void mem_free(MemoryGroup* memory, void* ptr){
 
     if(!ptr){return;}
     Memory* mem = memory->start;
-    int i = 0,worked = 0;
+    size_t i = 0,worked = 0;
     for(;i<memory->size;i++){
         if(mem->element == ptr){worked=1;break;}
         mem = mem->next;
@@ -48,7 +48,7 @@ void mem_free(MemoryGroup* memory, void* ptr){
     free(mem);
 }
 // copies the memory from ptr to a new location
-void* mem_copy(MemoryGroup* memory, void* ptr, int size){
+void* mem_copy(MemoryGroup* memory, void* ptr, size_t size){
     void* new_ptr = mem_init(memory,size);
     memcpy(new_ptr,ptr,size);
     return new_ptr;

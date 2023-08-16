@@ -1,9 +1,9 @@
 #include "../include.h"
 
 // removes the item without freeing the element, only linked item
-static void linked_remove_item(Linked* linked, int index){
-    int end = linked->size - index;
-    int start = index;
+static void linked_remove_item(Linked* linked, size_t index){
+    size_t end = linked->size - index;
+    size_t start = index;
     LinkedItem* item;
     // handle out of bounds
     if(index < 0 || index >= linked->size){return;}
@@ -24,7 +24,7 @@ static void linked_remove_item(Linked* linked, int index){
         // it is closer to the start
         if(index > end){
             LinkedItem* next = linked->start;
-            for(int i=0;i<start;i++){next = next->next;}
+            for(size_t i=0;i<start;i++){next = next->next;}
             LinkedItem* prev = next->prev;
             prev->next = next->next;
             next->next->prev = prev;
@@ -33,7 +33,7 @@ static void linked_remove_item(Linked* linked, int index){
         // it is closer to the end
         else{
             LinkedItem* prev = linked->end;
-            for(int i=0;i<end;i++){prev = prev->prev;}
+            for(size_t i=0;i<end;i++){prev = prev->prev;}
             LinkedItem* next = prev->next;
             prev->next = next->next;
             next->next->prev = prev;
@@ -68,7 +68,7 @@ void linked_add(Linked* linked, void* element){
     linked->end = item;
 }
 // adds an element to the linked list at the specified index
-void linked_insert(Linked* linked, void* element, int index){
+void linked_insert(Linked* linked, void* element, size_t index){
     LinkedItem* item = mem_init(linked->memory, sizeof(LinkedItem));
     item->element = element;
     // handle out of bounds
@@ -87,12 +87,12 @@ void linked_insert(Linked* linked, void* element, int index){
     }
     // handle anywhere else
     else{
-        int end = linked->size - index;
-        int start = index;
+        size_t end = linked->size - index;
+        size_t start = index;
         // it is closer to the start
         if(index > end){
             LinkedItem* next = linked->start;
-            for(int i=0;i<start;i++){next = next->next;}
+            for(size_t i=0;i<start;i++){next = next->next;}
             LinkedItem* prev = next->prev;
             prev->next = item;
             item->prev = prev;
@@ -102,7 +102,7 @@ void linked_insert(Linked* linked, void* element, int index){
         // it is closer to the end
         else{
             LinkedItem* prev = linked->end;
-            for(int i=0;i<end;i++){prev = prev->prev;}
+            for(size_t i=0;i<end;i++){prev = prev->prev;}
             LinkedItem* next = prev->next;
             prev->next = item;
             item->prev = prev;
@@ -113,9 +113,9 @@ void linked_insert(Linked* linked, void* element, int index){
     linked->size++;
 }
 // removes an element from the linked list
-void linked_remove(Linked* linked, int index){
-    int end = linked->size - index;
-    int start = index;
+void linked_remove(Linked* linked, size_t index){
+    size_t end = linked->size - index;
+    size_t start = index;
     LinkedItem* item;
     // handle out of bounds
     if(index < 0 || index >= linked->size){return;}
@@ -136,7 +136,7 @@ void linked_remove(Linked* linked, int index){
         // it is closer to the start
         if(index > end){
             LinkedItem* next = linked->start;
-            for(int i=0;i<start;i++){next = next->next;}
+            for(size_t i=0;i<start;i++){next = next->next;}
             LinkedItem* prev = next->prev;
             prev->next = next->next;
             next->next->prev = prev;
@@ -145,7 +145,7 @@ void linked_remove(Linked* linked, int index){
         // it is closer to the end
         else{
             LinkedItem* prev = linked->end;
-            for(int i=0;i<end;i++){prev = prev->prev;}
+            for(size_t i=0;i<end;i++){prev = prev->prev;}
             LinkedItem* next = prev->next;
             prev->next = next->next;
             next->next->prev = prev;
@@ -168,7 +168,7 @@ void* linked_pop(Linked* linked){
     return element;
 }
 // get the element at the specified index
-void* linked_get(Linked* linked, int index){
+void* linked_get(Linked* linked, size_t index){
     LinkedItem* item;
     // handle out of bounds
     if(index < 0 || index >= linked->size){return NULL;}
@@ -178,25 +178,25 @@ void* linked_get(Linked* linked, int index){
     else if(index == linked->size){item = linked->end;}
     // handle anywhere else
     else{
-        int end = linked->size - index;
-        int start = index;
+        size_t end = linked->size - index;
+        size_t start = index;
         // it is closer to the start
         if(start > end){
             LinkedItem* next = linked->start;
-            for(int i=0;i<start;i++){next = next->next;}
+            for(size_t i=0;i<start;i++){next = next->next;}
             item = next;
         }
         // it is closer to the end
         else{
             LinkedItem* prev = linked->end;
-            for(int i=0;i<end;i++){prev = prev->prev;}
+            for(size_t i=0;i<end;i++){prev = prev->prev;}
             item = prev;
         }
     }
     return item->element;
 }
 // get and remove the element at the specified index
-void* linked_get_and_remove(Linked* linked, int index){
+void* linked_get_and_remove(Linked* linked, size_t index){
     LinkedItem* item;
     // handle out of bounds
     if(index < 0 || index >= linked->size){return NULL;}
@@ -206,18 +206,18 @@ void* linked_get_and_remove(Linked* linked, int index){
     else if(index == linked->size){item = linked->end;}
     // handle anywhere else
     else{
-        int end = linked->size - index;
-        int start = index;
+        size_t end = linked->size - index;
+        size_t start = index;
         // it is closer to the start
         if(start > end){
             LinkedItem* next = linked->start;
-            for(int i=0;i<start;i++){next = next->next;}
+            for(size_t i=0;i<start;i++){next = next->next;}
             item = next;
         }
         // it is closer to the end
         else{
             LinkedItem* prev = linked->end;
-            for(int i=0;i<end;i++){prev = prev->prev;}
+            for(size_t i=0;i<end;i++){prev = prev->prev;}
             item = prev;
         }
     }
@@ -226,7 +226,7 @@ void* linked_get_and_remove(Linked* linked, int index){
     return element;
 }
 // replace the element at the specified index
-void linked_replace(Linked* linked, void* element, int index){
+void linked_replace(Linked* linked, void* element, size_t index){
     LinkedItem* item;
     // handle out of bounds
     if(index < 0 || index >= linked->size){return;}
@@ -236,18 +236,18 @@ void linked_replace(Linked* linked, void* element, int index){
     else if(index == linked->size){item = linked->end;}
     // handle anywhere else
     else{
-        int end = linked->size - index;
-        int start = index;
+        size_t end = linked->size - index;
+        size_t start = index;
         // it is closer to the start
         if(start > end){
             LinkedItem* next = linked->start;
-            for(int i=0;i<start;i++){next = next->next;}
+            for(size_t i=0;i<start;i++){next = next->next;}
             item = next;
         }
         // it is closer to the end
         else{
             LinkedItem* prev = linked->end;
-            for(int i=0;i<end;i++){prev = prev->prev;}
+            for(size_t i=0;i<end;i++){prev = prev->prev;}
             item = prev;
         }
     }

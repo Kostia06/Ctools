@@ -17,12 +17,12 @@ void vector_add(Vector* vector, void* element){
     vector->data[vector->size] = element;
 }
 // gets element at index
-void* vector_get(Vector* vector, int index){
+void* vector_get(Vector* vector, size_t index){
     if(index < 0 || index >= vector->size){return NULL;}
     return vector->data[index];
 }
 // adds element by index
-void vector_insert(Vector* vector, void* element, int index){
+void vector_insert(Vector* vector, void* element, size_t index){
     if(index < 0 || index >= vector->size){return;}
     if(vector->size++ == vector->capacity){
         vector->capacity *= 2;
@@ -32,12 +32,12 @@ void vector_insert(Vector* vector, void* element, int index){
     vector->data[index] = element;
 }
 // replaces item at index
-void vector_replace(Vector* vector, void* element, int index){
+void vector_replace(Vector* vector, void* element, size_t index){
     if(index < 0 || index >= vector->size){return;}
     vector->data[index] = element;
 }
 // removes element at index
-void vector_remove(Vector* vector, int index){
+void vector_remove(Vector* vector, size_t index){
     if(index < 0 || index >= vector->size){return;}
     mem_free(vector->memory,vector->data[index]);
     memmove(&vector->data[index], &vector->data[index+1], (vector->size - index)*sizeof(void*));

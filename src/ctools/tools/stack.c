@@ -20,7 +20,7 @@ void* stack_pop(Stack* stack){
 }
 // free stack
 void stack_free(Stack* stack){
-    for(int i=0;i<stack->top;i++){
+    for(size_t i=0;i<stack->top;i++){
         mem_free(stack->memory,stack->data[i]);
     }
     mem_free(stack->memory,stack->data);

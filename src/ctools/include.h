@@ -15,6 +15,9 @@ typedef struct VectorStruct Vector;
 
 typedef struct StackStruct Stack;
 
+typedef struct NodeStruct Node;
+typedef struct NodeTreeStruct NodeTree;
+
 /*
     ****** NOTES ******
     - Memory
@@ -24,11 +27,14 @@ typedef struct StackStruct Stack;
         For example, if you have a vector of 10 integers, it will take up 12 memory slots
     - Linked
         always takes up 1 memory slots
-        or each item, it takes up 2 memory slots
+        each item, it takes up 2 memory slots
         For example, if you have a linked list of 10 integers, it will take up 21 memory slots 
     - Stack
         always takes up 2 memory slots, the amount of items do not matter
         For example, if you have a stack of 10 integers, it will take up 2 memory slots
+    - Node tree
+        always takes up 4 memory slots
+        each node takes up 3 memory slots 
 */
 
 
@@ -41,10 +47,10 @@ typedef struct VectorStruct{
 
 Vector* vector_init(MemoryGroup* memory);
 void vector_add(Vector* vector, void* element);
-void* vector_get(Vector* vector, int index);
-void vector_insert(Vector* vector, void* element, int index);
-void vector_replace(Vector* vector, void* element, int index);
-void vector_remove(Vector* vector, int index);
+void* vector_get(Vector* vector, size_t index);
+void vector_insert(Vector* vector, void* element, size_t index);
+void vector_replace(Vector* vector, void* element, size_t index);
+void vector_remove(Vector* vector, size_t index);
 void* vector_pop(Vector* vector);
 void vector_clear(Vector* vector);
 void vector_free(Vector* vector);
@@ -61,12 +67,12 @@ typedef struct LinkedStruct{
 
 Linked* linked_init(MemoryGroup* memory);
 void linked_add(Linked* linked, void* element);
-void linked_insert(Linked* linked, void* element, int index);
-void linked_remove(Linked* linked, int index);
+void linked_insert(Linked* linked, void* element, size_t index);
+void linked_remove(Linked* linked, size_t index);
 void* linked_pop(Linked* linked);
-void* linked_get(Linked* linked, int index);
-void* linked_get_and_remove(Linked* linked, int index);
-void linked_replace(Linked* linked, void* element, int index);
+void* linked_get(Linked* linked, size_t index);
+void* linked_get_and_remove(Linked* linked, size_t index);
+void linked_replace(Linked* linked, void* element, size_t index);
 void linked_free(Linked* linked);
 // stack ----------------------------------------------------------------------
 typedef struct StackStruct{
@@ -79,6 +85,24 @@ Stack* stack_init(MemoryGroup* memory, size_t capacity);
 void stack_add(Stack* stack, void* element);
 void* stack_pop(Stack* stack);
 void stack_free(Stack* stack);
+// node -----------------------------------------------------------------------
+typedef struct NodeStruct{
+    void* element;
+    Node** roots;
+    size_t* slots;
+    size_t size;
+} Node;
+typedef struct NodeTreeStruct{
+    MemoryGroup* memory;
+    Node* head;
+    size_t size;
+} NodeTree;
+
+NodeTree* node_init(MemoryGroup* memory, size_t size);
+Node* node_add(NodeTree* tree,Node* node, size_t index, void* element);
+void* node_get_value(NodeTree* tree, size_t* indexs, size_t size);
+void node_remove(NodeTree* tree,Node* node);
+void node_free(NodeTree* tree);
 // memory ---------------------------------------------------------------------
 typedef struct MemoryStruct{
     Memory* prev, *next;
@@ -90,8 +114,8 @@ typedef struct MemoryGroupStruct{
 } MemoryGroup;
 
 MemoryGroup* mem_group_init();
-void* mem_init(MemoryGroup* memory, int size);
+void* mem_init(MemoryGroup* memory, size_t size);
 void mem_free(MemoryGroup* memory, void* ptr);
-void* mem_copy(MemoryGroup* memory, void* ptr, int size);
+void* mem_copy(MemoryGroup* memory, void* ptr, size_t size);
 #endif
 
