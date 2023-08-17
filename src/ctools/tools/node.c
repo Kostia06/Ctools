@@ -12,11 +12,11 @@ NodeTree* node_init(MemoryGroup* memory,size_t size){
 }
 // create new node add to targer node roots
 Node* node_add(NodeTree* tree, Node* node, size_t index, void* element){
+    if(node->roots[index]){return node->roots[index];}
     Node* new_node = mem_init(tree->memory, sizeof(Node));
     new_node->element = element;
     new_node->roots = mem_init(tree->memory, sizeof(Node*) * tree->size);
     new_node->slots = mem_init(tree->memory, sizeof(int) * tree->size);
-    if(node->roots[index]){node_remove(tree,node->roots[index]);}
     node->roots[index] = new_node;
     node->slots[node->size++] = index;
     return new_node;
