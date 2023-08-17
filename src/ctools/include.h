@@ -42,7 +42,7 @@ typedef struct NodeTreeStruct NodeTree;
 typedef struct VectorStruct{
     MemoryGroup* memory;
     void** data;
-    size_t size, capacity;
+    size_t size;
 }Vector;
 
 Vector* vector_init(MemoryGroup* memory);
