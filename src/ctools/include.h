@@ -52,6 +52,7 @@ void vector_insert(Vector* vector, void* element, size_t index);
 void vector_replace(Vector* vector, void* element, size_t index);
 void vector_remove(Vector* vector, size_t index);
 void* vector_pop(Vector* vector);
+void* vector_pop_by_index(Vector* vector, size_t index);
 void vector_clear(Vector* vector);
 void vector_free(Vector* vector);
 // linked list ---------------------------------------------------------------

@@ -4,14 +4,13 @@
 Vector* vector_init(MemoryGroup* memory){
     Vector* vector = mem_init(memory,sizeof(Vector));
     vector->memory = memory;
-    vector->data = mem_init(memory, vector->size*sizeof(void*));
+    vector->data = mem_init(memory, sizeof(void*));
     return vector;
 }
 // adds an element to the end of the vector
 void vector_add(Vector* vector, void* element){
-    vector->size++;
     vector->data = realloc(vector->data, vector->size*2*sizeof(void*));
-    vector->data[vector->size] = element;
+    vector->data[vector->size++] = element;
 }
 // gets element at index
 void* vector_get(Vector* vector, size_t index){
@@ -20,8 +19,7 @@ void* vector_get(Vector* vector, size_t index){
 }
 // adds element by index
 void vector_insert(Vector* vector, void* element, size_t index){
-    if(index < 0 || index >= vector->size){return;}
-    vector->size++;
+    if(index < 0 || index >= vector->size++){return;}
     vector->data = realloc(vector->data, vector->size*2*sizeof(void*));
     memmove(&vector->data[index+1], &vector->data[index], (vector->size - index)*sizeof(void*));
     vector->data[index] = element;
@@ -43,6 +41,15 @@ void vector_remove(Vector* vector, size_t index){
 void* vector_pop(Vector* vector){
     if(vector->size == 0){return NULL;}
     void* element = vector->data[vector->size - 1];
+    vector->size--;
+    vector->data = realloc(vector->data, vector->size/2*sizeof(void*));
+    return element;
+}
+// pop by index
+void* vector_pop_by_index(Vector* vector, size_t index){
+    if(index < 0 || index >= vector->size){return NULL;}
+    void* element = vector->data[index];
+    memmove(&vector->data[index], &vector->data[index+1], (vector->size - index)*sizeof(void*));
     vector->size--;
     vector->data = realloc(vector->data, vector->size/2*sizeof(void*));
     return element;
