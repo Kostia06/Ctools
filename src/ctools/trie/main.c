@@ -35,10 +35,10 @@ void trie_remove(Trie* trie,size_t* array){
     }
     mem_free(node->children[index]);
 }
-void trie_mem_free(Trie* trie){
+void trie_free(Trie* trie){
     for(size_t i =0;i<256;i++){
         if(trie->children[i]){
-            trie_mem_free(trie->children[i]);
+            trie_free(trie->children[i]);
         }
     }
     mem_free(trie);
