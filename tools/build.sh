@@ -2,7 +2,7 @@
 
 CC="clang"
 NAME="ctools"
-C_FLAGS="-lobjc -std=c11"
+C_FLAGS="-lobjc -std=gnu2x"
 SRC=$(find ../src/ -type f -name "*.c" -o -name "*.m")
 ARGS=""
 for i in {1..10}
